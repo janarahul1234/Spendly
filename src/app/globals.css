@@ -1,0 +1,195 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Money accents — green income, red expense, yellow savings, purple goals. */
+  --color-income: var(--income);
+  --color-expense: var(--expense);
+  --color-savings: var(--savings);
+  --color-goal: var(--goal);
+  --color-neutral-accent: var(--neutral-accent);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --shadow-soft: var(--shadow-soft);
+  --shadow-raised: var(--shadow-raised);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --spacing: 0.25rem;
+}
+
+:root {
+  --background: oklch(0.984 0.002 85);
+  --foreground: oklch(0.21 0.012 75);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.012 75);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.012 75);
+  --primary: oklch(0.23 0.014 75);
+  --primary-foreground: oklch(0.985 0.002 95);
+  --secondary: oklch(0.965 0.004 85);
+  --secondary-foreground: oklch(0.28 0.014 75);
+  --muted: oklch(0.962 0.004 85);
+  --muted-foreground: oklch(0.53 0.014 80);
+  --accent: oklch(0.952 0.005 85);
+  --accent-foreground: oklch(0.28 0.014 75);
+  --destructive: oklch(0.577 0.215 27.325);
+  --border: oklch(0.912 0.005 85);
+  --input: oklch(0.912 0.005 85);
+  --ring: oklch(0.62 0.015 80);
+
+  /* Accent lightness is tuned so every token clears WCAG AA (4.5:1) on both the
+     page and card surfaces — see scripts/contrast.mjs. */
+  --income: oklch(0.52 0.12 158);
+  --expense: oklch(0.54 0.19 25);
+  --savings: oklch(0.55 0.115 75);
+  --goal: oklch(0.5 0.17 285);
+  --neutral-accent: oklch(0.53 0.014 80);
+
+  --chart-1: oklch(0.52 0.12 158);
+  --chart-2: oklch(0.54 0.19 25);
+  --chart-3: oklch(0.5 0.17 285);
+  --chart-4: oklch(0.55 0.115 75);
+  --chart-5: oklch(0.5 0.12 240);
+
+  --radius: 0.75rem;
+  --shadow-soft: 0 1px 2px 0 oklch(0.25 0.02 75 / 0.04);
+  --shadow-raised: 0 2px 12px -4px oklch(0.25 0.02 75 / 0.1);
+}
+
+.dark {
+  --background: oklch(0.17 0.008 80);
+  --foreground: oklch(0.96 0.005 90);
+  --card: oklch(0.212 0.009 80);
+  --card-foreground: oklch(0.96 0.005 90);
+  --popover: oklch(0.225 0.01 80);
+  --popover-foreground: oklch(0.96 0.005 90);
+  --primary: oklch(0.94 0.006 90);
+  --primary-foreground: oklch(0.21 0.012 75);
+  --secondary: oklch(0.27 0.01 80);
+  --secondary-foreground: oklch(0.95 0.005 90);
+  --muted: oklch(0.27 0.01 80);
+  --muted-foreground: oklch(0.72 0.012 82);
+  --accent: oklch(0.29 0.011 80);
+  --accent-foreground: oklch(0.95 0.005 90);
+  --destructive: oklch(0.68 0.19 24);
+  --border: oklch(0.97 0.005 90 / 10%);
+  --input: oklch(0.97 0.005 90 / 14%);
+  --ring: oklch(0.55 0.02 82);
+
+  --income: oklch(0.74 0.14 158);
+  --expense: oklch(0.71 0.17 25);
+  --savings: oklch(0.8 0.13 82);
+  --goal: oklch(0.7 0.15 288);
+  --neutral-accent: oklch(0.7 0.012 82);
+
+  --chart-1: oklch(0.74 0.14 158);
+  --chart-2: oklch(0.71 0.17 25);
+  --chart-3: oklch(0.7 0.15 288);
+  --chart-4: oklch(0.8 0.13 82);
+  --chart-5: oklch(0.72 0.11 240);
+
+  --shadow-soft: 0 1px 2px 0 oklch(0 0 0 / 0.25);
+  --shadow-raised: 0 2px 16px -6px oklch(0 0 0 / 0.5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading tracking-tight;
+    font-weight: 550;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--foreground) 12%, transparent);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  /* Amounts line up in columns instead of dancing around. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* 150-250ms micro-interactions, applied where a component opts in. */
+  .soft-transition {
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      box-shadow 200ms ease,
+      transform 200ms ease,
+      opacity 200ms ease;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
