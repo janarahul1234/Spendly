@@ -49,7 +49,7 @@ function isLoopback(origin: string): boolean {
  * 4. `http://localhost:3000` — SSR-only fallback; never used in a browser.
  */
 export function resolveAppUrl(): string {
-  const origin = browserOrigin();
+  const origin = "https://spendly-three-gamma.vercel.app";
 
   if (origin && isLoopback(origin)) return stripTrailingSlash(origin);
 
