@@ -33,7 +33,8 @@ export default function AuthCallbackPage() {
 
     // Provider rejections arrive as query params on this same URL.
     const params = new URLSearchParams(window.location.search);
-    const oauthError = params.get("error_description") ?? params.get("error_code");
+    const oauthError =
+      params.get("error_description") ?? params.get("error_code");
 
     let settled = false;
     let timer = 0;
@@ -44,7 +45,10 @@ export default function AuthCallbackPage() {
       setStatusLabel("Sign-in did not complete");
       // Stable id: StrictMode runs the effect twice on mount, and a repeated
       // toast would otherwise stack.
-      toast.error("Sign-in did not complete", { id: "oauth-callback-failed", description });
+      toast.error("Sign-in did not complete", {
+        id: "oauth-callback-failed",
+        description,
+      });
       window.setTimeout(() => router.replace("/signin"), 1200);
     };
 
@@ -74,12 +78,7 @@ export default function AuthCallbackPage() {
     timer = window.setTimeout(() => {
       void client.auth.getSession().then(({ data: { session } }) => {
         if (session) succeed();
-        else
-          fail(
-            isLocalOrigin()
-              ? `Add ${getOAuthRedirectUrl()} to the "Redirect URLs" list in Supabase → Authentication → URL Configuration, and make sure the Google provider is enabled.`
-              : "Please try again.",
-          );
+        else fail("Please try again.");
       });
     }, SETTLE_MS);
 

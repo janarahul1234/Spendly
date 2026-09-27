@@ -60,7 +60,7 @@ export function resolveAppUrl(): string {
 
 /** Where Supabase should return the browser once the provider sign-in settles. */
 export function getOAuthRedirectUrl(): string {
-  return `${resolveAppUrl()}${OAUTH_CALLBACK_PATH}`;
+  return "https://spendly-three-gamma.vercel.app/signin/callback";
 }
 
 /** True when running on a developer machine (used to hint at local config gaps). */

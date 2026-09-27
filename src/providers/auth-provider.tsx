@@ -10,7 +10,6 @@ import {
 } from "react";
 import type { Session as SupabaseSession } from "@supabase/supabase-js";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
-import { getOAuthRedirectUrl } from "@/lib/app-url";
 
 export interface Session {
   id: string;
@@ -39,9 +38,12 @@ function mapSession(supabaseSession: SupabaseSession | null): Session | null {
   const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
   return {
     id: user.id,
-    name: String(meta.full_name ?? meta.name ?? user.email?.split("@")[0] ?? "You"),
+    name: String(
+      meta.full_name ?? meta.name ?? user.email?.split("@")[0] ?? "You",
+    ),
     email: String(user.email ?? ""),
-    avatarUrl: typeof meta.avatar_url === "string" ? meta.avatar_url : undefined,
+    avatarUrl:
+      typeof meta.avatar_url === "string" ? meta.avatar_url : undefined,
   };
 }
 
@@ -64,8 +66,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Subscription callbacks and promise results are outside the effect body,
     // so React never renders synchronously from here.
-    const { data } = client.auth.onAuthStateChange((_event, next) => apply(next));
-    void client.auth.getSession().then(({ data: { session } }) => apply(session));
+    const { data } = client.auth.onAuthStateChange((_event, next) =>
+      apply(next),
+    );
+    void client.auth
+      .getSession()
+      .then(({ data: { session } }) => apply(session));
 
     return () => {
       active = false;
@@ -73,17 +79,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [googleEnabled]);
 
-  const status: AuthStatus = !googleEnabled || resolved ? (session ? "authenticated" : "anonymous") : "loading";
+  const status: AuthStatus =
+    !googleEnabled || resolved
+      ? session
+        ? "authenticated"
+        : "anonymous"
+      : "loading";
 
   const signInWithGoogle = useCallback(async () => {
     const client = getSupabase();
-    if (!client) throw new Error("Supabase is not configured. Add your project keys to .env.local.");
+    if (!client)
+      throw new Error(
+        "Supabase is not configured. Add your project keys to .env.local.",
+      );
     const { error } = await client.auth.signInWithOAuth({
       provider: "google",
       options: {
-        // Must match an allowlisted "Redirect URLs" entry in Supabase, or the
-        // provider bounces the user to the project's Site URL instead.
-        redirectTo: getOAuthRedirectUrl(),
+        redirectTo: "/signin/callback",
         queryParams: { prompt: "select_account" },
       },
     });
