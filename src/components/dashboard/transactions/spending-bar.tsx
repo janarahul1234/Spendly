@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { formatCurrency, formatPercent } from "@/lib/format";
-import type { FormatOptions } from "@/lib/format";
-import type { CategorySlice } from "@/lib/analytics";
+import { formatCurrency, formatPercent } from "@/services/supabase/utils/format";
+import type { FormatOptions } from "@/services/supabase/utils/format";
+import type { CategorySlice } from "@/services/supabase/utils/analytics";
 import { cn } from "@/lib/utils";
 
 /**

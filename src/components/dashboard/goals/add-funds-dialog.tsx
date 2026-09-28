@@ -14,11 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { formatCurrency, round2 } from "@/lib/format";
-import { useData } from "@/providers/data-provider";
+import { formatCurrency, round2 } from "@/services/supabase/utils/format";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import type { Goal } from "@/lib/types";
+import type { Goal } from "@/services/supabase/types/goal";
 
 const QUICK = [50, 100, 250, 500];
 

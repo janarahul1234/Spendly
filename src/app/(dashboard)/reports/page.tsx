@@ -5,29 +5,29 @@ import { Download } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { DashboardSkeleton, ErrorState } from "@/components/app/state-views";
-import { CategoryBars, SpendingBar } from "@/components/expense/spending-bar";
+import { DashboardSkeleton, ErrorState } from "@/components/dashboard/state-views";
+import { CategoryBars, SpendingBar } from "@/components/dashboard/transactions/spending-bar";
 import {
   CategoryDonut,
   ChartCard,
   IncomeVsExpenseChart,
   SavingsTrendChart,
   SpendingTrendChart,
-} from "@/components/reports/charts";
+} from "@/components/dashboard/reports/charts";
 import {
   categoryBreakdown,
   monthlyTrend,
   savingsTrend,
   totalsOf,
-} from "@/lib/analytics";
+} from "@/services/supabase/utils/analytics";
 import {
   formatCompactCurrency,
   formatCurrency,
   formatMonthShort,
   round2,
-} from "@/lib/format";
-import { exportTransactionsCsv } from "@/lib/export";
-import { useData } from "@/providers/data-provider";
+} from "@/services/supabase/utils/format";
+import { exportTransactionsCsv } from "@/services/supabase/utils/export";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { cn } from "@/lib/utils";
 
 const RANGES = [6, 12] as const;

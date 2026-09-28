@@ -6,12 +6,12 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { SiteLogo } from "@/components/app/site-logo";
-import { ThemeToggle } from "@/components/app/theme-toggle";
-import { NotificationBell } from "@/components/app/notification-bell";
-import { UserMenu } from "@/components/app/user-menu";
-import { AddTransactionButton } from "@/components/expense/add-transaction-button";
-import { isActivePath, NAV_ITEMS } from "@/lib/nav";
+import { SiteLogo } from "@/components/dashboard/site-logo";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
+import { NotificationBell } from "@/components/dashboard/notification-bell";
+import { UserMenu } from "@/components/dashboard/user-menu";
+import { AddTransactionButton } from "@/components/dashboard/transactions/add-transaction-button";
+import { isActivePath, NAV_ITEMS } from "@/services/supabase/utils/nav";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {

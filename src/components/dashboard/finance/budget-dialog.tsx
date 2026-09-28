@@ -32,10 +32,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CATEGORIES, CATEGORY_GROUPS } from "@/lib/categories";
-import { useData } from "@/providers/data-provider";
+import { CATEGORIES, CATEGORY_GROUPS } from "@/services/supabase/data/categories";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { toast } from "sonner";
-import type { Budget } from "@/lib/types";
+import type { Budget } from "@/services/supabase/types/budget";
 
 const OVERALL = "overall";
 

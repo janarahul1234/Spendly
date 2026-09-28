@@ -1,4 +1,4 @@
-import type { GoalColor } from "@/lib/types";
+import type { GoalColor } from "@/services/supabase/types/goal";
 
 export const GOAL_COLORS: { id: GoalColor; label: string }[] = [
   { id: "green", label: "Green" },

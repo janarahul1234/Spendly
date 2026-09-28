@@ -1,4 +1,4 @@
-import type { PaymentMethod } from "@/lib/types";
+import type { PaymentMethod } from "@/services/supabase/types/transaction";
 
 export interface CategoryDef {
   id: string;

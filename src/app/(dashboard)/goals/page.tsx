@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import { Plus, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { DashboardSkeleton, EmptyState, ErrorState } from "@/components/app/state-views";
-import { GoalCard } from "@/components/goals/goal-card";
-import { GoalFormDialog } from "@/components/goals/goal-form-dialog";
-import { formatCurrency, round2 } from "@/lib/format";
-import { useData } from "@/providers/data-provider";
+import { DashboardSkeleton, EmptyState, ErrorState } from "@/components/dashboard/state-views";
+import { GoalCard } from "@/components/dashboard/goals/goal-card";
+import { GoalFormDialog } from "@/components/dashboard/goals/goal-form-dialog";
+import { formatCurrency, round2 } from "@/services/supabase/utils/format";
+import { useData } from "@/services/supabase/contexts/data-provider";
 
 export default function GoalsPage() {
   const { status, error, reload, goals, format } = useData();

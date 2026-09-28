@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AppShell } from "@/components/app/app-shell";
+import { AppShell } from "@/components/dashboard/app-shell";
 
 export const metadata: Metadata = {
   // Re-declaring the template here is what lets nested segments inherit

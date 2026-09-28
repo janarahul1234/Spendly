@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CATEGORIES, CATEGORY_GROUPS, getCategory } from "@/lib/categories";
+import { CATEGORIES, CATEGORY_GROUPS, getCategory } from "@/services/supabase/data/categories";
 import { cn } from "@/lib/utils";
 
 export interface TransactionFilterValue {

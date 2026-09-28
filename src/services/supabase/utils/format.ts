@@ -1,4 +1,4 @@
-import type { CurrencyCode } from "@/lib/types";
+import type { CurrencyCode } from "@/services/supabase/types/settings";
 
 export const CURRENCIES: { code: CurrencyCode; label: string; locale: string }[] = [
   { code: "USD", label: "US Dollar", locale: "en-US" },

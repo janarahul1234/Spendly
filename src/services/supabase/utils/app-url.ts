@@ -8,7 +8,7 @@
  * deliberately instead of pasted together at the call site.
  */
 
-/** OAuth landing route, kept in sync with `src/app/signin/callback`. */
+/** OAuth landing route, kept in sync with `src/app/(auth)/signin/callback`. */
 const OAUTH_CALLBACK_PATH = "/signin/callback";
 
 /** Hosts that are always this machine, so the live URL beats any configured one. */

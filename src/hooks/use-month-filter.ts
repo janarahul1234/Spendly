@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { addMonthsToKey, currentMonthKey } from "@/lib/format";
+import { addMonthsToKey, currentMonthKey } from "@/services/supabase/utils/format";
 
 /**
  * Selected month, shared across screens for the whole SPA session.

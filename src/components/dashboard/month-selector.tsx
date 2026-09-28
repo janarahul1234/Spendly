@@ -3,7 +3,7 @@
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { addMonthsToKey, currentMonthKey, formatMonthLabel } from "@/lib/format";
+import { addMonthsToKey, currentMonthKey, formatMonthLabel } from "@/services/supabase/utils/format";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 

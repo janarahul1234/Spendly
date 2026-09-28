@@ -22,13 +22,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DashboardSkeleton, ErrorState } from "@/components/app/state-views";
-import { CURRENCIES } from "@/lib/format";
-import { exportBackupJson, exportTransactionsCsv } from "@/lib/export";
-import { sortNewestFirst } from "@/lib/analytics";
-import { useAuth } from "@/providers/auth-provider";
-import { useData } from "@/providers/data-provider";
-import type { CurrencyCode } from "@/lib/types";
+import { DashboardSkeleton, ErrorState } from "@/components/dashboard/state-views";
+import { CURRENCIES } from "@/services/supabase/utils/format";
+import { exportBackupJson, exportTransactionsCsv } from "@/services/supabase/utils/export";
+import { sortNewestFirst } from "@/services/supabase/utils/analytics";
+import { useAuth } from "@/services/supabase/contexts/auth-provider";
+import { useData } from "@/services/supabase/contexts/data-provider";
+import type { CurrencyCode } from "@/services/supabase/types/settings";
 
 const LOCALES = [
   { value: "en-US", label: "English (US)" },

@@ -4,7 +4,7 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { formatPercent } from "@/lib/format";
+import { formatPercent } from "@/services/supabase/utils/format";
 
 export type StatAccent = "income" | "expense" | "savings" | "goal" | "neutral";
 

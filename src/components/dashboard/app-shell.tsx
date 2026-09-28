@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/providers/auth-provider";
-import { DataProvider } from "@/providers/data-provider";
-import { SiteHeader } from "@/components/app/site-header";
-import { DashboardSkeleton } from "@/components/app/state-views";
-import { Wordmark } from "@/components/app/site-logo";
+import { useAuth } from "@/services/supabase/contexts/auth-provider";
+import { DataProvider } from "@/services/supabase/contexts/data-provider";
+import { SiteHeader } from "@/components/dashboard/site-header";
+import { DashboardSkeleton } from "@/components/dashboard/state-views";
+import { Wordmark } from "@/components/dashboard/site-logo";
 
 /**
  * Auth guard + persistent chrome for every screen inside the app.

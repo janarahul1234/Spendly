@@ -1,7 +1,7 @@
-import { formatCurrency, formatMonthLabel } from "@/lib/format";
-import type { FormatOptions } from "@/lib/format";
-import { getCategory } from "@/lib/categories";
-import type { Transaction } from "@/lib/types";
+import { formatCurrency, formatMonthLabel } from "@/services/supabase/utils/format";
+import type { FormatOptions } from "@/services/supabase/utils/format";
+import { getCategory } from "@/services/supabase/data/categories";
+import type { Transaction } from "@/services/supabase/types/transaction";
 
 function escapeCsv(value: string | number): string {
   const text = String(value);

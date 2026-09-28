@@ -8,19 +8,19 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { MonthSelector } from "@/components/app/month-selector";
-import { DashboardSkeleton, ErrorState } from "@/components/app/state-views";
-import { AddTransactionButton } from "@/components/expense/add-transaction-button";
+import { MonthSelector } from "@/components/dashboard/month-selector";
+import { DashboardSkeleton, ErrorState } from "@/components/dashboard/state-views";
+import { AddTransactionButton } from "@/components/dashboard/transactions/add-transaction-button";
 import {
   EMPTY_FILTERS,
   TransactionFilters,
   type TransactionFilterValue,
-} from "@/components/expense/transaction-filters";
-import { TransactionList } from "@/components/expense/transaction-list";
-import { filterTransactions, sortNewestFirst, totalsOf } from "@/lib/analytics";
-import { formatCurrency } from "@/lib/format";
-import { exportTransactionsCsv } from "@/lib/export";
-import { useData } from "@/providers/data-provider";
+} from "@/components/dashboard/transactions/transaction-filters";
+import { TransactionList } from "@/components/dashboard/transactions/transaction-list";
+import { filterTransactions, sortNewestFirst, totalsOf } from "@/services/supabase/utils/analytics";
+import { formatCurrency } from "@/services/supabase/utils/format";
+import { exportTransactionsCsv } from "@/services/supabase/utils/export";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { useMonthFilter } from "@/hooks/use-month-filter";
 import { cn } from "@/lib/utils";
 

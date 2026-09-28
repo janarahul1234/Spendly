@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import type { VariantProps } from "class-variance-authority";
-import { TransactionFormDialog } from "@/components/expense/transaction-form-dialog";
+import { TransactionFormDialog } from "@/components/dashboard/transactions/transaction-form-dialog";
 import { cn } from "@/lib/utils";
 
 /** `+ Add Transaction` — the same trigger is used in the header and on pages. */

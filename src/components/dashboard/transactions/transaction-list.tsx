@@ -3,12 +3,12 @@
 import { useMemo, useState } from "react";
 import { Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EmptyState } from "@/components/app/state-views";
-import { TransactionRow } from "@/components/expense/transaction-row";
-import { groupByDate, type DateGroup } from "@/lib/analytics";
-import { relativeDayLabel } from "@/lib/format";
-import { useData } from "@/providers/data-provider";
-import type { Transaction } from "@/lib/types";
+import { EmptyState } from "@/components/dashboard/state-views";
+import { TransactionRow } from "@/components/dashboard/transactions/transaction-row";
+import { groupByDate, type DateGroup } from "@/services/supabase/utils/analytics";
+import { relativeDayLabel } from "@/services/supabase/utils/format";
+import { useData } from "@/services/supabase/contexts/data-provider";
+import type { Transaction } from "@/services/supabase/types/transaction";
 
 export function TransactionList({
   transactions,

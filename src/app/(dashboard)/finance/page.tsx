@@ -5,16 +5,16 @@ import Link from "next/link";
 import { AlertCircle, Pencil, PiggyBank, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MonthSelector } from "@/components/app/month-selector";
-import { DashboardSkeleton, EmptyState, ErrorState } from "@/components/app/state-views";
-import { StatCard } from "@/components/expense/stat-card";
-import { BudgetDialog } from "@/components/finance/budget-dialog";
-import { budgetRows, summarizeMonth, type BudgetRow } from "@/lib/analytics";
-import { currentMonthKey, formatCurrency, round2 } from "@/lib/format";
-import { useData } from "@/providers/data-provider";
+import { MonthSelector } from "@/components/dashboard/month-selector";
+import { DashboardSkeleton, EmptyState, ErrorState } from "@/components/dashboard/state-views";
+import { StatCard } from "@/components/dashboard/transactions/stat-card";
+import { BudgetDialog } from "@/components/dashboard/finance/budget-dialog";
+import { budgetRows, summarizeMonth, type BudgetRow } from "@/services/supabase/utils/analytics";
+import { currentMonthKey, formatCurrency, round2 } from "@/services/supabase/utils/format";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { useMonthFilter } from "@/hooks/use-month-filter";
 import { cn } from "@/lib/utils";
-import type { Budget } from "@/lib/types";  
+import type { Budget } from "@/services/supabase/types/budget";  
 
 export default function FinancePage() {
   const { status, error, reload, transactions, budgets, format, settings } = useData();

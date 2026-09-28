@@ -2,22 +2,18 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { createId } from "@/lib/id";
-import { getRepo, type DataRepo } from "@/lib/repo";
-import { round2 } from "@/lib/format";
-import { DEFAULT_SETTINGS } from "@/lib/sample-data";
-import { buildReminders } from "@/lib/reminders";
-import { getCategory } from "@/lib/categories";
-import type { FormatOptions } from "@/lib/format";
-import type {
-  AppData,
-  AppNotification,
-  Goal,
-  GoalDraft,
-  Settings,
-  Transaction,
-  TransactionDraft,
-} from "@/lib/types";
+import { createId } from "@/services/supabase/utils/id";
+import { getPersistence, type DataPersistence } from "@/services/supabase/data/persistence";
+import { round2 } from "@/services/supabase/utils/format";
+import { DEFAULT_SETTINGS } from "@/services/supabase/data/sample";
+import { buildReminders } from "@/services/supabase/data/reminders";
+import { getCategory } from "@/services/supabase/data/categories";
+import type { FormatOptions } from "@/services/supabase/utils/format";
+import type { AppData } from "@/services/supabase/types/app-data";
+import type { AppNotification } from "@/services/supabase/types/notification";
+import type { Goal, GoalDraft } from "@/services/supabase/types/goal";
+import type { Settings } from "@/services/supabase/types/settings";
+import type { Transaction, TransactionDraft } from "@/services/supabase/types/transaction";
 
 type Status = "loading" | "ready" | "error";
 
@@ -59,7 +55,7 @@ const EMPTY: AppData = {
 const DataContext = createContext<DataValue | null>(null);
 
 export function DataProvider({ userId, children }: { userId: string; children: React.ReactNode }) {
-  const repo = getRepo();
+  const persistence = getPersistence();
 
   const [data, setData] = useState<AppData>(EMPTY);
   /** Which user id the loaded data belongs to; drives the loading state. */
@@ -70,11 +66,11 @@ export function DataProvider({ userId, children }: { userId: string; children: R
   useEffect(() => {
     let cancelled = false;
 
-    repo
+    persistence
       .load(userId)
       .then((next) => {
         if (cancelled) return;
-        setData(withReminders(next, repo, userId));
+        setData(withReminders(next, persistence, userId));
         setLoadedFor(userId);
       })
       .catch((cause: unknown) => {
@@ -86,7 +82,7 @@ export function DataProvider({ userId, children }: { userId: string; children: R
     return () => {
       cancelled = true;
     };
-  }, [repo, userId, nonce]);
+  }, [persistence, userId, nonce]);
 
   const status: Status = loadedFor !== userId ? "loading" : error ? "error" : "ready";
 
@@ -107,14 +103,14 @@ export function DataProvider({ userId, children }: { userId: string; children: R
         notifications: alert ? [alert, ...prev.notifications] : prev.notifications,
       }));
       try {
-        await repo.saveTransaction(userId, item);
-        if (alert) await repo.saveNotification(userId, alert).catch(() => undefined);
+        await persistence.saveTransaction(userId, item);
+        if (alert) await persistence.saveNotification(userId, alert).catch(() => undefined);
       } catch (cause) {
         setData((prev) => ({ ...prev, transactions: prev.transactions.filter((entry) => entry.id !== item.id) }));
         reportFailure(cause, "Could not save transaction");
       }
     },
-    [data, repo, userId, reportFailure],
+    [data, persistence, userId, reportFailure],
   );
 
   const updateTransaction = useCallback(
@@ -127,7 +123,7 @@ export function DataProvider({ userId, children }: { userId: string; children: R
         transactions: prev.transactions.map((entry) => (entry.id === id ? next : entry)),
       }));
       try {
-        await repo.saveTransaction(userId, next);
+        await persistence.saveTransaction(userId, next);
       } catch (cause) {
         setData((prev) => ({
           ...prev,
@@ -136,7 +132,7 @@ export function DataProvider({ userId, children }: { userId: string; children: R
         reportFailure(cause, "Could not update transaction");
       }
     },
-    [data.transactions, repo, userId, reportFailure],
+    [data.transactions, persistence, userId, reportFailure],
   );
 
   const deleteTransaction = useCallback(
@@ -145,13 +141,13 @@ export function DataProvider({ userId, children }: { userId: string; children: R
       if (!previous) return;
       setData((prev) => ({ ...prev, transactions: prev.transactions.filter((entry) => entry.id !== id) }));
       try {
-        await repo.deleteTransaction(userId, id);
+        await persistence.deleteTransaction(userId, id);
       } catch (cause) {
         setData((prev) => ({ ...prev, transactions: [previous, ...prev.transactions] }));
         reportFailure(cause, "Could not delete transaction");
       }
     },
-    [data.transactions, repo, userId, reportFailure],
+    [data.transactions, persistence, userId, reportFailure],
   );
 
   /* -------------------------------- goals ------------------------------- */
@@ -165,12 +161,12 @@ export function DataProvider({ userId, children }: { userId: string; children: R
           : [...prev.goals, goal],
       }));
       try {
-        await repo.saveGoal(userId, goal);
+        await persistence.saveGoal(userId, goal);
       } catch (cause) {
         reportFailure(cause, "Could not save goal");
       }
     },
-    [repo, userId, reportFailure],
+    [persistence, userId, reportFailure],
   );
 
   const addGoal = useCallback(
@@ -193,12 +189,12 @@ export function DataProvider({ userId, children }: { userId: string; children: R
     async (id: string) => {
       setData((prev) => ({ ...prev, goals: prev.goals.filter((entry) => entry.id !== id) }));
       try {
-        await repo.deleteGoal(userId, id);
+        await persistence.deleteGoal(userId, id);
       } catch (cause) {
         reportFailure(cause, "Could not delete goal");
       }
     },
-    [repo, userId, reportFailure],
+    [persistence, userId, reportFailure],
   );
 
   const contributeToGoal = useCallback(
@@ -223,24 +219,24 @@ export function DataProvider({ userId, children }: { userId: string; children: R
           : [...prev.budgets, budget],
       }));
       try {
-        await repo.saveBudget(userId, budget);
+        await persistence.saveBudget(userId, budget);
       } catch (cause) {
         reportFailure(cause, "Could not save budget");
       }
     },
-    [data.budgets, repo, userId, reportFailure],
+    [data.budgets, persistence, userId, reportFailure],
   );
 
   const deleteBudget = useCallback(
     async (id: string) => {
       setData((prev) => ({ ...prev, budgets: prev.budgets.filter((entry) => entry.id !== id) }));
       try {
-        await repo.deleteBudget(userId, id);
+        await persistence.deleteBudget(userId, id);
       } catch (cause) {
         reportFailure(cause, "Could not delete budget");
       }
     },
-    [repo, userId, reportFailure],
+    [persistence, userId, reportFailure],
   );
 
   /* ---------------------------- notifications --------------------------- */
@@ -254,9 +250,9 @@ export function DataProvider({ userId, children }: { userId: string; children: R
         ...prev,
         notifications: prev.notifications.map((entry) => (entry.id === id ? next : entry)),
       }));
-      void repo.saveNotification(userId, next).catch(() => undefined);
+      void persistence.saveNotification(userId, next).catch(() => undefined);
     },
-    [data.notifications, repo, userId],
+    [data.notifications, persistence, userId],
   );
 
   const markNotificationRead = useCallback(
@@ -268,17 +264,17 @@ export function DataProvider({ userId, children }: { userId: string; children: R
     const unread = data.notifications.filter((entry) => !entry.read);
     if (unread.length === 0) return;
     setData((prev) => ({ ...prev, notifications: prev.notifications.map((entry) => ({ ...entry, read: true })) }));
-    void Promise.all(unread.map((entry) => repo.saveNotification(userId, { ...entry, read: true }))).catch(
+    void Promise.all(unread.map((entry) => persistence.saveNotification(userId, { ...entry, read: true }))).catch(
       () => undefined,
     );
-  }, [data.notifications, repo, userId]);
+  }, [data.notifications, persistence, userId]);
 
   const deleteNotification = useCallback(
     (id: string) => {
       setData((prev) => ({ ...prev, notifications: prev.notifications.filter((entry) => entry.id !== id) }));
-      void repo.deleteNotification(userId, id).catch(() => undefined);
+      void persistence.deleteNotification(userId, id).catch(() => undefined);
     },
-    [repo, userId],
+    [persistence, userId],
   );
 
   /* ------------------------------- settings ----------------------------- */
@@ -287,9 +283,9 @@ export function DataProvider({ userId, children }: { userId: string; children: R
     (patch: Partial<Settings>) => {
       const settings: Settings = { ...data.settings, ...patch };
       setData((prev) => ({ ...prev, settings }));
-      void repo.saveSettings(userId, settings).catch(() => undefined);
+      void persistence.saveSettings(userId, settings).catch(() => undefined);
     },
-    [data.settings, repo, userId],
+    [data.settings, persistence, userId],
   );
 
   /* ----------------------------- sample data ---------------------------- */
@@ -297,7 +293,7 @@ export function DataProvider({ userId, children }: { userId: string; children: R
   const loadSampleData = useCallback(async () => {
     setLoadedFor(null);
     try {
-      const next = await repo.seedSampleData(userId);
+      const next = await persistence.seedSampleData(userId);
       setData(next);
       setLoadedFor(userId);
       toast.success("Sample data restored");
@@ -305,14 +301,14 @@ export function DataProvider({ userId, children }: { userId: string; children: R
       reportFailure(cause, "Could not restore sample data");
       setLoadedFor(userId);
     }
-  }, [repo, userId, reportFailure]);
+  }, [persistence, userId, reportFailure]);
 
   const clearAllData = useCallback(async () => {
     setLoadedFor(null);
     try {
-      await repo.clear(userId);
+      await persistence.clear(userId);
       const blank: AppData = { transactions: [], goals: [], budgets: [], notifications: [], settings: data.settings };
-      await repo.saveSettings(userId, data.settings).catch(() => undefined);
+      await persistence.saveSettings(userId, data.settings).catch(() => undefined);
       setData(blank);
       setLoadedFor(userId);
       toast.success("All records cleared");
@@ -320,7 +316,7 @@ export function DataProvider({ userId, children }: { userId: string; children: R
       reportFailure(cause, "Could not clear data");
       setLoadedFor(userId);
     }
-  }, [repo, userId, data.settings, reportFailure]);
+  }, [persistence, userId, data.settings, reportFailure]);
 
   const reload = useCallback(() => {
     setError(null);
@@ -430,11 +426,11 @@ function buildBudgetAlert(data: AppData, item: Transaction): AppNotification | n
  * Adds today's reminders (goal nudges, budget alerts, logging prompt) on top of
  * whatever the workspace already stores, and persists the new ones.
  */
-function withReminders(loaded: AppData, repo: DataRepo, userId: string): AppData {
+function withReminders(loaded: AppData, persistence: DataPersistence, userId: string): AppData {
   const reminders = buildReminders(loaded);
   if (reminders.length === 0) return loaded;
   for (const reminder of reminders) {
-    void repo.saveNotification(userId, reminder).catch(() => undefined);
+    void persistence.saveNotification(userId, reminder).catch(() => undefined);
   }
   return { ...loaded, notifications: [...reminders, ...loaded.notifications] };
 }

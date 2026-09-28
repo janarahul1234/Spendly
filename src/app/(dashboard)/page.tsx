@@ -4,17 +4,17 @@ import { useMemo, useState } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MonthSelector } from "@/components/app/month-selector";
-import { DashboardSkeleton, ErrorState } from "@/components/app/state-views";
-import { AddTransactionButton } from "@/components/expense/add-transaction-button";
-import { StatCard } from "@/components/expense/stat-card";
-import { SpendingBar } from "@/components/expense/spending-bar";
-import { TransactionList } from "@/components/expense/transaction-list";
+import { MonthSelector } from "@/components/dashboard/month-selector";
+import { DashboardSkeleton, ErrorState } from "@/components/dashboard/state-views";
+import { AddTransactionButton } from "@/components/dashboard/transactions/add-transaction-button";
+import { StatCard } from "@/components/dashboard/transactions/stat-card";
+import { SpendingBar } from "@/components/dashboard/transactions/spending-bar";
+import { TransactionList } from "@/components/dashboard/transactions/transaction-list";
 import {
   EMPTY_FILTERS,
   TransactionFilters,
   type TransactionFilterValue,
-} from "@/components/expense/transaction-filters";
+} from "@/components/dashboard/transactions/transaction-filters";
 import {
   balanceThrough,
   distribution,
@@ -22,15 +22,15 @@ import {
   sortNewestFirst,
   summarizeMonth,
   transactionsOfMonth,
-} from "@/lib/analytics";
+} from "@/services/supabase/utils/analytics";
 import {
   addMonthsToKey,
   currentMonthKey,
   formatCurrency,
   formatMonthLabel,
   round2,
-} from "@/lib/format";
-import { useData } from "@/providers/data-provider";
+} from "@/services/supabase/utils/format";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { useMonthFilter } from "@/hooks/use-month-filter";
 
 export default function HomePage() {

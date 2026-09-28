@@ -6,9 +6,9 @@ import { BarChart3, Loader2, ShieldCheck, Target } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Wordmark } from "@/components/app/site-logo";
-import { ThemeToggle } from "@/components/app/theme-toggle";
-import { useAuth } from "@/providers/auth-provider";
+import { Wordmark } from "@/components/dashboard/site-logo";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
+import { useAuth } from "@/services/supabase/contexts/auth-provider";
 
 const HIGHLIGHTS = [
   { icon: BarChart3, title: "See where it goes", text: "A distribution bar and reports that stay readable." },

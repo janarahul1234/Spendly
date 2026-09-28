@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import type { Session as SupabaseSession } from "@supabase/supabase-js";
-import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getSupabase, isSupabaseConfigured } from "@/services/supabase/client";
 
 export interface Session {
   id: string;

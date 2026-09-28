@@ -1,5 +1,5 @@
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { getCategory } from "@/lib/categories";
+import { getCategory } from "@/services/supabase/data/categories";
 import { cn } from "@/lib/utils";
 
 /**

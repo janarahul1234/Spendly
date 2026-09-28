@@ -14,12 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { GOAL_COLORS, goalColorClasses } from "@/lib/goal-colors";
-import { todayISO } from "@/lib/format";
+import { GOAL_COLORS, goalColorClasses } from "@/services/supabase/data/goal-colors";
+import { todayISO } from "@/services/supabase/utils/format";
 import { cn } from "@/lib/utils";
-import { useData } from "@/providers/data-provider";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { toast } from "sonner";
-import type { Goal, GoalColor, GoalDraft } from "@/lib/types";
+import type { Goal, GoalColor, GoalDraft } from "@/services/supabase/types/goal";
 
 interface FormState {
   name: string;

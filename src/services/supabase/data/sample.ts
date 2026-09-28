@@ -1,15 +1,11 @@
-import { createId } from "@/lib/id";
-import { toISODate } from "@/lib/format";
-import type {
-  AppData,
-  AppNotification,
-  Budget,
-  Goal,
-  PaymentMethod,
-  Settings,
-  Transaction,
-  TransactionDraft,
-} from "@/lib/types";
+import { createId } from "@/services/supabase/utils/id";
+import { toISODate } from "@/services/supabase/utils/format";
+import type { AppData } from "@/services/supabase/types/app-data";
+import type { AppNotification } from "@/services/supabase/types/notification";
+import type { Budget } from "@/services/supabase/types/budget";
+import type { Goal } from "@/services/supabase/types/goal";
+import type { PaymentMethod, Transaction, TransactionDraft } from "@/services/supabase/types/transaction";
+import type { Settings } from "@/services/supabase/types/settings";
 
 /**
  * Deterministic sample data so the dashboard, charts and budgets always look
@@ -360,7 +356,7 @@ export function createSampleNotifications(): AppNotification[] {
   const hoursAgo = (hours: number) => new Date(now - hours * 3_600_000).toISOString();
 
   // Only informational items live here. Budget and goal alerts are derived from
-  // the data on load (see `lib/reminders.ts`), so seeding them would duplicate.
+  // the data on load (see `services/supabase/data/reminders.ts`), so seeding them would duplicate.
   return [
     {
       id: createId("ntf"),

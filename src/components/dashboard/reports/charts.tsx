@@ -20,10 +20,10 @@ import {
 } from "recharts";
 import { useTheme } from "next-themes";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { accentHex } from "@/lib/categories";
-import { formatCompactCurrency, formatCurrency, formatPercent } from "@/lib/format";
-import type { FormatOptions } from "@/lib/format";
-import type { CategorySlice, SavingsPoint, TrendPoint } from "@/lib/analytics";
+import { accentHex } from "@/services/supabase/data/categories";
+import { formatCompactCurrency, formatCurrency, formatPercent } from "@/services/supabase/utils/format";
+import type { FormatOptions } from "@/services/supabase/utils/format";
+import type { CategorySlice, SavingsPoint, TrendPoint } from "@/services/supabase/utils/analytics";
 
 /**
  * Recharts wrappers tuned for the light/dark tokens. Colours are resolved in

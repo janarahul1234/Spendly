@@ -23,11 +23,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PAYMENT_METHODS, CATEGORY_GROUPS, categoriesForType, getCategory } from "@/lib/categories";
-import { todayISO } from "@/lib/format";
+import { PAYMENT_METHODS, CATEGORY_GROUPS, categoriesForType, getCategory } from "@/services/supabase/data/categories";
+import { todayISO } from "@/services/supabase/utils/format";
 import { cn } from "@/lib/utils";
-import { useData } from "@/providers/data-provider";
-import type { PaymentMethod, Transaction, TransactionDraft, TransactionType } from "@/lib/types";
+import { useData } from "@/services/supabase/contexts/data-provider";
+import type { PaymentMethod, Transaction, TransactionDraft, TransactionType } from "@/services/supabase/types/transaction";
 
 interface FormState {
   type: TransactionType;

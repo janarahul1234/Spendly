@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { getSupabase } from "@/lib/supabase/client";
-import { getOAuthRedirectUrl, isLocalOrigin } from "@/lib/app-url";
+import { getSupabase } from "@/services/supabase/client";
+import { getOAuthRedirectUrl, isLocalOrigin } from "@/services/supabase/utils/app-url";
 
 /** How long to wait for the PKCE exchange before giving up. */
 const SETTLE_MS = 8000;

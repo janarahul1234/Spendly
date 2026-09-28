@@ -1,6 +1,7 @@
-import { accentHex, getCategory } from "@/lib/categories";
-import { addMonthsToKey, monthKeyOf, round2 } from "@/lib/format";
-import type { Budget, Transaction } from "@/lib/types";
+import { accentHex, getCategory } from "@/services/supabase/data/categories";
+import { addMonthsToKey, monthKeyOf, round2 } from "@/services/supabase/utils/format";
+import type { Budget } from "@/services/supabase/types/budget";
+import type { Transaction } from "@/services/supabase/types/transaction";
 
 /** Aggregations that power the dashboard, finance and report views. */
 

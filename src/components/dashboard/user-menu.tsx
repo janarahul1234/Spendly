@@ -15,10 +15,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useAuth } from "@/providers/auth-provider";
-import { useData } from "@/providers/data-provider";
-import { exportBackupJson, exportTransactionsCsv } from "@/lib/export";
-import { sortNewestFirst } from "@/lib/analytics";
+import { useAuth } from "@/services/supabase/contexts/auth-provider";
+import { useData } from "@/services/supabase/contexts/data-provider";
+import { exportBackupJson, exportTransactionsCsv } from "@/services/supabase/utils/export";
+import { sortNewestFirst } from "@/services/supabase/utils/analytics";
 
 function initials(name: string) {
   return name

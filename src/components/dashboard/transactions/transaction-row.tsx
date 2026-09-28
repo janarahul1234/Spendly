@@ -19,14 +19,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { AmountBadge, CategoryPill } from "@/components/expense/category-pill";
-import { TransactionFormDialog } from "@/components/expense/transaction-form-dialog";
-import { getCategory, getPaymentMethod } from "@/lib/categories";
-import { formatCurrency } from "@/lib/format";
+import { AmountBadge, CategoryPill } from "@/components/dashboard/transactions/category-pill";
+import { TransactionFormDialog } from "@/components/dashboard/transactions/transaction-form-dialog";
+import { getCategory, getPaymentMethod } from "@/services/supabase/data/categories";
+import { formatCurrency } from "@/services/supabase/utils/format";
 import { cn } from "@/lib/utils";
-import { useData } from "@/providers/data-provider";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { toast } from "sonner";
-import type { Transaction } from "@/lib/types";
+import type { Transaction } from "@/services/supabase/types/transaction";
 
 export function TransactionRow({
   transaction,

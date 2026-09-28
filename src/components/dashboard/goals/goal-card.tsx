@@ -20,14 +20,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { AddFundsDialog } from "@/components/goals/add-funds-dialog";
-import { GoalFormDialog } from "@/components/goals/goal-form-dialog";
-import { goalColorClasses } from "@/lib/goal-colors";
-import { daysUntil, formatCurrency, formatFullDate, formatPercent, round2 } from "@/lib/format";
-import { useData } from "@/providers/data-provider";
+import { AddFundsDialog } from "@/components/dashboard/goals/add-funds-dialog";
+import { GoalFormDialog } from "@/components/dashboard/goals/goal-form-dialog";
+import { goalColorClasses } from "@/services/supabase/data/goal-colors";
+import { daysUntil, formatCurrency, formatFullDate, formatPercent, round2 } from "@/services/supabase/utils/format";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import type { Goal } from "@/lib/types";
+import type { Goal } from "@/services/supabase/types/goal";
 
 export function GoalCard({ goal }: { goal: Goal }) {
   const { format, deleteGoal } = useData();

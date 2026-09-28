@@ -1,7 +1,8 @@
-import { createId } from "@/lib/id";
-import { budgetRows } from "@/lib/analytics";
-import { currentMonthKey, daysUntil, todayISO } from "@/lib/format";
-import type { AppData, AppNotification } from "@/lib/types";
+import { createId } from "@/services/supabase/utils/id";
+import { budgetRows } from "@/services/supabase/utils/analytics";
+import { currentMonthKey, daysUntil, todayISO } from "@/services/supabase/utils/format";
+import type { AppData } from "@/services/supabase/types/app-data";
+import type { AppNotification } from "@/services/supabase/types/notification";
 
 /**
  * Builds the in-app reminders shown in the notification tray. Runs once after

@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import { useData } from "@/providers/data-provider";
+import { useData } from "@/services/supabase/contexts/data-provider";
 import { cn } from "@/lib/utils";
-import type { AppNotification } from "@/lib/types";
+import type { AppNotification } from "@/services/supabase/types/notification";
 
 const TONE_DOT: Record<AppNotification["tone"], string> = {
   info: "bg-goal",
