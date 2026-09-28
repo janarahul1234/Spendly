@@ -10,7 +10,6 @@ import {
 } from "react";
 import type { Session as SupabaseSession } from "@supabase/supabase-js";
 import { getSupabase, isSupabaseConfigured } from "@/services/supabase/client";
-import { getOAuthRedirectUrl } from "@/services/supabase/utils/app-url";
 
 export interface Session {
   id: string;
@@ -92,9 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await client.auth.signInWithOAuth({
       provider: "google",
       options: {
-        // Land straight on the dashboard; the browser client establishes the
-        // session from the returned code, so no intermediate callback page.
-        redirectTo: getOAuthRedirectUrl(),
+        redirectTo: `${window.location.origin}/`,
       },
     });
     if (error) throw error;
