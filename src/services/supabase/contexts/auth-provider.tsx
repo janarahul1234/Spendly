@@ -10,6 +10,7 @@ import {
 } from "react";
 import type { Session as SupabaseSession } from "@supabase/supabase-js";
 import { getSupabase, isSupabaseConfigured } from "@/services/supabase/client";
+import { getOAuthRedirectUrl } from "@/services/supabase/utils/app-url";
 
 export interface Session {
   id: string;
@@ -23,9 +24,7 @@ type AuthStatus = "loading" | "authenticated" | "anonymous";
 interface AuthValue {
   session: Session | null;
   status: AuthStatus;
-  /** Whether Google OAuth is wired up (Supabase env vars present). */
   googleEnabled: boolean;
-  /** Starts the Google OAuth flow; the same call signs users in and up. */
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -64,8 +63,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setResolved(true);
     };
 
-    // Subscription callbacks and promise results are outside the effect body,
-    // so React never renders synchronously from here.
     const { data } = client.auth.onAuthStateChange((_event, next) =>
       apply(next),
     );
@@ -95,8 +92,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await client.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "/signin/callback",
-        queryParams: { prompt: "select_account" },
+        // Land straight on the dashboard; the browser client establishes the
+        // session from the returned code, so no intermediate callback page.
+        redirectTo: getOAuthRedirectUrl(),
       },
     });
     if (error) throw error;

@@ -48,11 +48,11 @@ Spendly stores everything in Supabase, so create a project first:
    localhost":
 
    - **Site URL**: `http://localhost:3000` while developing, your deployed origin
-     (`https://spendly-sigma-three.vercel.app`) once live.
-   - **Redirect URLs**: add every callback you use, e.g.
-     `http://localhost:3000/signin/callback`, `http://127.0.0.1:3000/signin/callback`,
-     `https://<production-host>/signin/callback`, and for Vercel previews
-     `https://*-<account-slug>.vercel.app/**`.
+     (`https://spendly-three-gamma.vercel.app`) once live.
+   - **Redirect URLs**: after sign-in the browser is returned to the app root
+     (`/`) on whatever origin started the flow, so allowlist those roots —
+     `http://localhost:3000`, `http://127.0.0.1:3000`, `https://spendly-three-gamma.vercel.app`,
+     and for Vercel previews `https://*-<account-slug>.vercel.app/**`.
 
    Keep the dev server on port **3000**: the PKCE code verifier is stored per
    origin, so starting on `:3000` and landing on `:3001` fails the exchange.
@@ -61,8 +61,6 @@ Spendly stores everything in Supabase, so create a project first:
    ```bash
    NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<publishable key>
-   # Leave empty locally; only set it for deployments (see .env.example).
-   NEXT_PUBLIC_APP_URL=
    ```
 
 6. Restart `npm run dev`. Open <http://localhost:3000>, sign in (or up) with Google,
@@ -74,13 +72,14 @@ not rotated to the new publishable key pair yet.
 
 ### Where sign-in redirects come from
 
-`src/services/supabase/utils/app-url.ts` resolves the OAuth `redirectTo` (`/signin/callback`) in this
-order: a loopback browser origin, then `NEXT_PUBLIC_APP_URL`, then the live
-browser origin, then `http://localhost:3000` for server renders. Local development
-therefore always returns to the port you started on, even if `NEXT_PUBLIC_APP_URL`
-is stale, while a deployment gets a fixed canonical origin. Set
-`NEXT_PUBLIC_APP_URL=https://<production-host>` in Vercel's environment variables
-(build-time, since `NEXT_PUBLIC_*` values are inlined) and leave it unset locally.
+`src/services/supabase/utils/app-url.ts` exposes a single helper,
+`getOAuthRedirectUrl()`, which returns the app root (`/`) on the **same origin**
+the sign-in started from (falling back to the production origin during server
+renders). The browser Supabase client completes the PKCE exchange and sets the
+session automatically, so there is no intermediate callback route — the user
+lands directly on the dashboard. Because the target is always the current
+origin, allowlisting the app roots (see step 4) is enough; no `NEXT_PUBLIC_APP_URL`
+is required.
 
 ### Scripts
 
@@ -109,7 +108,6 @@ src/
       profile/            # account, settings, data tools
     (auth)/
       signin/             # unified Google sign-in / sign-up page
-      signin/callback/    # OAuth landing page
     favicon.svg, error.tsx, not-found.tsx, globals.css, layout.tsx
   components/
     ui/                   # shadcn/ui primitives
