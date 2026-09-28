@@ -13,14 +13,16 @@ import { Wordmark } from "@/components/dashboard/site-logo";
  * Data loading states live in the pages so each view owns its skeleton.
  */
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const { status, session } = useAuth();
+  const { status, session, googleEnabled } = useAuth();
   const router = useRouter();
 
   // Sessions resolve asynchronously, so "anonymous" is only trustworthy once
   // Supabase has reported back; "loading" keeps the skeleton on screen.
+  // When Supabase isn't configured there is no way to authenticate, so staying
+  // put avoids a bounce loop between this guard and the /signin page.
   useEffect(() => {
-    if (status === "anonymous") router.replace("/signin");
-  }, [status, router]);
+    if (googleEnabled && status === "anonymous") router.replace("/signin");
+  }, [googleEnabled, status, router]);
 
   if (status !== "authenticated") {
     return (
